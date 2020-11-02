@@ -3,7 +3,6 @@ class Inventario{
         numeroItem,
         descripcion,
         ubicacion,
-        cantidadDisponibleVenta,
         cantidadDiponible,
         puntoReorden,
         costoUnitario,
@@ -13,7 +12,6 @@ class Inventario{
         this.numeroItem = numeroItem;
         this.descripcion = descripcion;
         this.ubicacion = ubicacion;
-        this.cantidadDisponibleVenta = cantidadDisponibleVenta;
         this.cantidadDiponible = cantidadDiponible;
         this.puntoReorden = puntoReorden;
         this.costoUnitario = costoUnitario;

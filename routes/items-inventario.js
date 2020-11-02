@@ -14,7 +14,6 @@ router.post('/', [
     check('numeroItem', 'El numeroItem es obligatorio').notEmpty(),
     check('descripcion', 'La descripcion es obligatoria').notEmpty(),
     check('ubicacion', 'La ubicacion es obligatoria').notEmpty(),
-    check('cantidadDisponibleVenta', 'La cantidad disponible para la venta es obligatoria').notEmpty(),
     check('cantidadDiponible', 'La cantidad disponible es obligatoria').notEmpty(),
     check('puntoReorden', 'El punto de reorden es obligatorio').notEmpty(),
     check('costoUnitario', 'El costo unitario es obligatorio').notEmpty(),

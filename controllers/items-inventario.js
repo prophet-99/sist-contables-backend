@@ -29,16 +29,14 @@ const findAllInactives = async (req = request, res = response) => {
 };
 
 const save = async (req = request, res = response) => {
-    const { numeroItem,  descripcion, ubicacion,
-        cantidadDisponibleVenta, cantidadDiponible, puntoReorden,
-        costoUnitario, tasaUso, idCategoria, action
+    const { numeroItem,  descripcion, ubicacion, cantidadDiponible, 
+        puntoReorden, costoUnitario, tasaUso, idCategoria, action
     } = req.body;
     try{
         const { inventarioRepository } = await MySQLConnection.getRepositories();
         const inventario = new Inventario({
-            numeroItem, descripcion, ubicacion, cantidadDisponibleVenta,
-            cantidadDiponible, puntoReorden, costoUnitario, tasaUso,
-            idCategoria
+            numeroItem, descripcion, ubicacion, cantidadDiponible, 
+            puntoReorden, costoUnitario, tasaUso, idCategoria
         });
         await inventarioRepository.save(inventario, action);
         res.json({ ok: true, msg: 'Item del inventario registrado correctamente' });

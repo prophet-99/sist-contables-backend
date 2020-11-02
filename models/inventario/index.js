@@ -3,7 +3,7 @@ const Inventario = require('./inventario');
 const register = ({ connection }) => {
     
     const findAll = async () => {
-        const sqlQuery = `select numero_item, inv.descripcion as item, ubicacion, cantidad_disponible_venta,
+        const sqlQuery = `select numero_item, inv.descripcion as item, ubicacion,
             cantidad_disponible, punto_reorden, costo_unitario, tasa_uso, id_categoria,
             c.descripcion as categoria
             from inventario inv
@@ -16,7 +16,7 @@ const register = ({ connection }) => {
     };
 
     const findAllInactives = async () => {
-        const sqlQuery = `select numero_item, inv.descripcion as item, ubicacion, cantidad_disponible_venta,
+        const sqlQuery = `select numero_item, inv.descripcion as item, ubicacion,
             cantidad_disponible, punto_reorden, costo_unitario, tasa_uso, id_categoria,
             c.descripcion as categoria
             from inventario inv
@@ -29,7 +29,7 @@ const register = ({ connection }) => {
     };
 
     const findByCodigoOrName = async (paramSearch) => {
-        const sqlQuery = `select numero_item, inv.descripcion as item, ubicacion, cantidad_disponible_venta,
+        const sqlQuery = `select numero_item, inv.descripcion as item, ubicacion,
             cantidad_disponible, punto_reorden, costo_unitario, tasa_uso, id_categoria,
             c.descripcion as categoria
             from inventario inv
@@ -43,7 +43,7 @@ const register = ({ connection }) => {
     };
 
     const findByCodigoOrNameInactives = async (paramSearch) => {
-        const sqlQuery = `select numero_item, inv.descripcion as item, ubicacion, cantidad_disponible_venta,
+        const sqlQuery = `select numero_item, inv.descripcion as item, ubicacion,
             cantidad_disponible, punto_reorden, costo_unitario, tasa_uso, id_categoria,
             c.descripcion as categoria
             from inventario inv
@@ -57,11 +57,11 @@ const register = ({ connection }) => {
     };
 
     const save = async (inventario = new Inventario(), action) => {
-        const sqlQuery = `call usp_createItemInventario(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const sqlQuery = `call usp_createItemInventario(?, ?, ?, ?, ?, ?, ?, ?, ?)`;
         
         return connection.query(sqlQuery, [ 
             inventario.numeroItem,  inventario.descripcion, inventario.ubicacion,
-            inventario.cantidadDisponibleVenta, inventario.cantidadDiponible, inventario.puntoReorden,
+            inventario.cantidadDiponible, inventario.puntoReorden,
             inventario.costoUnitario, inventario.tasaUso, inventario.idCategoria, action
         ]).then( (vq) => vq )
         .catch( (err) => { throw err; } );
