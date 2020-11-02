@@ -4,7 +4,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validateFields } = require('./../middlewares/check_fields');
-const { findAll, deleteById, save, findAllInactives } = require('./../controllers/itemsInventario');
+const { findAll, deleteById, save, findAllInactives } = require('./../controllers/items-inventario');
 
 const router = Router();
 

@@ -8,6 +8,7 @@ app.use(`${ baseAPI }/login`, require('./auth'));
 app.use(`${ baseAPI }/empleado`, require('./empleados'));
 app.use(`${ baseAPI }/cliente`, require('./clientes'));
 app.use(`${ baseAPI }/proveedor`, require('./proveedores'));
-app.use(`${ baseAPI }/inventario/items`, require('./itemsInventario'));
+app.use(`${ baseAPI }/inventario/items`, require('./items-inventario'));
+app.use(`${ baseAPI }/compra`, require('./compras'));
 
 module.exports = app;

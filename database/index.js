@@ -7,6 +7,7 @@ const empleado = require('./../models/empleado');
 const cliente = require('./../models/cliente');
 const proveedor = require('./../models/proveedor');
 const inventario = require('./../models/inventario');
+const compra = require('./../models/compra');
 
 class MySQLServerConnection{
     static instance;
@@ -54,7 +55,8 @@ class MySQLServerConnection{
             empleadoRepository: empleado.register({ connection }),
             clienteRepository: cliente.register({ connection }),
             proveedorRepository: proveedor.register({ connection }),
-            inventarioRepository: inventario.register({ connection })
+            inventarioRepository: inventario.register({ connection }),
+            compraRepository: compra.register({ connection })
         }
     }
 }
