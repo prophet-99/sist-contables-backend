@@ -5,6 +5,7 @@ const DetalleDisponibilidad = require('../models/compra/detalle-verificar');
 const CheckDisponibilidad = require('./../models/compra/check-disponibilidad');
 const DetalleOrden = require('./../models/compra/detalle-orden');
 const RecibirItems = require('../models/compra/recibir-items');
+const DetalleRecepcion = require('../models/compra/detalle-recepcion');
 
 const findAllItemsWithState = async(req = request, res = response) => {
     try {
@@ -114,6 +115,7 @@ const recibirItems = async(req = request, res = response) => {
     const { items } = req.body;
     try {
         for (let i = 0; i < items.length; i++) {
+
             const {
                 numeroComprobante,
                 fechaRecepcion,
@@ -145,7 +147,28 @@ const recibirItems = async(req = request, res = response) => {
     }
 };
 
+const detalleRecepcion = async(req = request, res = response) => {
 
+    const { detalleItems } = req.body;
+    try {
+        for (let i = 0; i < detalleItems.length; i++) {
+            const { idNumeroItem, idNumeroComprobante, cantidadRecibida, costoUnitarioActual, estado_recepcion, observacion } = detalleItems[i];
+            const { compraRepository } = await MySQLConnection.getRepositories();
+            const detalleRecepcion = new DetalleRecepcion({
+                idNumeroItem,
+                idNumeroComprobante,
+                cantidadRecibida,
+                costoUnitarioActual,
+                estado_recepcion,
+                observacion
+            });
+            await compraRepository.detalleRecepcion(detalleRecepcion);
+        }
+        res.json({ ok: true, msg: 'Detalle de la recepción registrada Correctamente' });
+    } catch (err) {
+        return res.status(500).json({ ok: false, msg: err });
+    }
+};
 
 module.exports = {
     findAllItemsWithState,
@@ -153,5 +176,6 @@ module.exports = {
     detalleDisponibilidad,
     checkCompra,
     detalleOrden,
-    recibirItems
+    recibirItems,
+    detalleRecepcion
 }
