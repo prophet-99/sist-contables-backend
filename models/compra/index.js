@@ -1,6 +1,8 @@
 const CheckDisponibilidad = require('./check-disponibilidad');
 const CheckCompra = require('./check-compra');
 const DetalleDisponibilidad = require('./detalle-verificar');
+const DetalleOrden = require('./detalle-orden');
+const RecibirItems = require('./recibir-items');
 
 const register = ({ connection }) => {
 
@@ -28,6 +30,16 @@ const register = ({ connection }) => {
             ]).then((vq) => vq)
             .catch((err) => { throw err; });
     }
+
+    const getIdVerificar = async() => {
+        const sqlQuery = `select id from verificar_disponibilidad
+        order by id desc limit 1`;
+
+        return connection.query(sqlQuery)
+            .then((vq) => vq)
+            .catch((err) => { throw err; });
+    }
+
     const detalleDisponibilidad = async(verifInventario = new DetalleDisponibilidad()) => {
         const sqlQuery = `INSERT INTO verificar_inventario(id_numero_item, id_verificar_disponibilidad, 
             descripcion, reorden, cantidad_solicitada)
@@ -53,27 +65,34 @@ const register = ({ connection }) => {
     }
 
     const detalleOrden = async(detalleOrden = new DetalleOrden()) => {
-        const sqlQuery = `INSERT INTO verificar_inventario(id_numero_item, id_verificar_disponibilidad, 
-            descripcion, reorden, cantidad_solicitada)
-            values( ? , ? , ? , ? , ? )`;
+        const sqlQuery = `INSERT INTO inventario_ordenar_producto (id_numero_item, id_numero_orden_compra, cantidad_orden, precio_unitario_compra )
+        VALUES (?,?,?,?)`;
 
         return connection.query(sqlQuery, [
-                verifInventario.idNumeroItem, verifInventario.idVerificarDisponibilidad,
-                verifInventario.descripcion, verifInventario.reorden, verifInventario.cantidadSolicitada
+                detalleOrden.idNumeroItem, detalleOrden.idNumeroOrdenCompra, detalleOrden.cantidad, detalleOrden.precioUnitarioCompra
             ]).then((vq) => vq)
             .catch((err) => { throw err; });
     }
 
+    const recibirItems = async(items = new RecibirItems()) => {
+        const sqlQuery = `INSERT into recibir_producto (numero_comprobante, fecha_recepcion, monto_adeuda, transportista, numero_recibo_inventario, id_proveedor, id_empleado, id_numero_orden_compra)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
-
-
-
+        return connection.query(sqlQuery, [
+                items.numeroComprobante, items.fechaRecepcion, items.montoAdeuda, items.transportista,
+                items.numeroReciboInventario, items.idProveedor, items.idEmpleado, items.idNumeroOrdenCompra
+            ]).then((vq) => vq)
+            .catch((err) => { throw err; });
+    }
 
     return {
         findAllItemsWithState,
         checkDisponibilidad,
+        getIdVerificar,
         detalleDisponibilidad,
-        checkCompra
+        checkCompra,
+        detalleOrden,
+        recibirItems
     };
 };
 

@@ -6,10 +6,10 @@ class DetalleOrden {
         cantidad,
         precioUnitarioCompra
     }) {
-        this.idNumeroItem = idNumeroItem,
-            this.idNumeroOrdenCompra = idNumeroOrdenCompra,
-            THIS.cantidad = cantidad,
-            this.precioUnitarioCompra = precioUnitarioCompra
+        this.idNumeroItem = idNumeroItem;
+        this.idNumeroOrdenCompra = idNumeroOrdenCompra;
+        this.cantidad = cantidad;
+        this.precioUnitarioCompra = precioUnitarioCompra;
     }
 }
 

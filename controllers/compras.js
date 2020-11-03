@@ -3,6 +3,8 @@ const MySQLConnection = require('./../database');
 const CheckCompra = require('../models/compra/check-compra');
 const DetalleDisponibilidad = require('../models/compra/detalle-verificar');
 const CheckDisponibilidad = require('./../models/compra/check-disponibilidad');
+const DetalleOrden = require('./../models/compra/detalle-orden');
+const RecibirItems = require('../models/compra/recibir-items');
 
 const findAllItemsWithState = async(req = request, res = response) => {
     try {
@@ -15,6 +17,7 @@ const findAllItemsWithState = async(req = request, res = response) => {
 };
 
 const checkDisponibilidad = async(req = request, res = response) => {
+
     const { hora, fecha, idEmpleado } = req.body;
     try {
         const { compraRepository } = await MySQLConnection.getRepositories();
@@ -24,8 +27,8 @@ const checkDisponibilidad = async(req = request, res = response) => {
             idEmpleado
         });
         await compraRepository.checkDisponibilidad(checkDisponibilidad);
-        //TODO: devolver id
-        res.json({ ok: true, msg: 'Verificación registrada correctamente' });
+        const idVerificar = await compraRepository.getIdVerificar();
+        res.json({ ok: true, idVerificar: idVerificar[0].idVerificar });
     } catch (err) {
         res.status(500).json({ ok: false, msg: err });
     }
@@ -67,7 +70,7 @@ const checkCompra = async(req = request, res = response) => {
     } = req.body;
     try {
         const { compraRepository } = await MySQLConnection.getRepositories();
-        const checkDisponibilidad = new CheckCompra({
+        const checkCompra = new CheckCompra({
             numeroOrden,
             descripcion,
             fechaPedido,
@@ -77,20 +80,78 @@ const checkCompra = async(req = request, res = response) => {
             idEmpleado,
             idVerificarDisponibilidad
         });
-        console.log("???|")
-        await compraRepository.checkCompra(checkDisponibilidad);
-        console.log('"')
-            //TODO: devolver id
-        res.json({ ok: true, msg: 'Orden de compra registrada correctamente' });
+        await compraRepository.checkCompra(checkCompra);
+        res.json({
+            ok: true,
+            msg: 'Orden de compra registrada Correctamente'
+        });
     } catch (err) {
         res.status(500).json({ ok: false, msg: err });
     }
 };
+const detalleOrden = async(req = request, res = response) => {
+
+    const { ordenarItems } = req.body;
+    try {
+        for (let i = 0; i < ordenarItems.length; i++) {
+            const { idNumeroItem, idNumeroOrdenCompra, cantidad, precioUnitarioCompra } = ordenarItems[i];
+            const { compraRepository } = await MySQLConnection.getRepositories();
+            const detalleOrden = new DetalleOrden({
+                idNumeroItem,
+                idNumeroOrdenCompra,
+                cantidad,
+                precioUnitarioCompra
+            });
+            await compraRepository.detalleOrden(detalleOrden);
+        }
+        res.json({ ok: true, msg: 'Detalle de la orden registrada Correctamente' });
+    } catch (err) {
+        return res.status(500).json({ ok: false, msg: err });
+    }
+};
+
+const recibirItems = async(req = request, res = response) => {
+    const { items } = req.body;
+    try {
+        for (let i = 0; i < items.length; i++) {
+            const {
+                numeroComprobante,
+                fechaRecepcion,
+                montoAdeuda,
+                transportista,
+                numeroReciboInventario,
+                idProveedor,
+                idEmpleado,
+                idNumeroOrdenCompra,
+                idCodigoFactura
+            } = items[i];
+            const { compraRepository } = await MySQLConnection.getRepositories();
+            const recibirItems = new RecibirItems({
+                numeroComprobante,
+                fechaRecepcion,
+                montoAdeuda,
+                transportista,
+                numeroReciboInventario,
+                idProveedor,
+                idEmpleado,
+                idNumeroOrdenCompra,
+                idCodigoFactura
+            });
+            await compraRepository.recibirItems(recibirItems);
+        }
+        res.json({ ok: true, msg: 'Detalle de la orden registrada Correctamente' });
+    } catch (err) {
+        return res.status(500).json({ ok: false, msg: err });
+    }
+};
+
 
 
 module.exports = {
     findAllItemsWithState,
     checkDisponibilidad,
     detalleDisponibilidad,
-    checkCompra
-};
+    checkCompra,
+    detalleOrden,
+    recibirItems
+}

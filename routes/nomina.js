@@ -1,6 +1,6 @@
 /**
-* Route: /api/v1/nomina
-*/
+ * Route: /api/v1/nomina
+ */
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validateFields } = require('./../middlewares/check_fields');
