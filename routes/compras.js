@@ -4,7 +4,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validateFields } = require('./../middlewares/check_fields');
-const { findAllItemsWithState, checkDisponibilidad, detalleDisponibilidad, checkCompra, detalleOrden, recibirItems } = require('./../controllers/compras');
+const { findAllItemsWithState, checkDisponibilidad, detalleDisponibilidad, checkCompra, detalleOrden, recibirItems, detalleRecepcion } = require('./../controllers/compras');
 
 const router = Router();
 
@@ -40,5 +40,11 @@ router.post('/recibiritems', [
     check('items').notEmpty(),
     validateFields
 ], recibirItems);
+
+router.post('/detallerecibir', [
+    check('detalleItems').notEmpty(),
+    validateFields
+], detalleRecepcion);
+
 
 module.exports = router;

@@ -3,6 +3,7 @@ const CheckCompra = require('./check-compra');
 const DetalleDisponibilidad = require('./detalle-verificar');
 const DetalleOrden = require('./detalle-orden');
 const RecibirItems = require('./recibir-items');
+const DetalleRecepcion = require('./detalle-recepcion');
 
 const register = ({ connection }) => {
 
@@ -74,6 +75,14 @@ const register = ({ connection }) => {
             .catch((err) => { throw err; });
     }
 
+    const insertFactura = async(codigo) => {
+        const sqlQuery = `INSERT INTO factura (codigo_factura) values (?)`;
+        return connection.query(sqlQuery, [
+                codigo
+            ]).then((vq) => vq)
+            .catch((err) => { throw err; });
+    }
+
     const recibirItems = async(items = new RecibirItems()) => {
         const sqlQuery = `INSERT into recibir_producto (numero_comprobante, fecha_recepcion, monto_adeuda, transportista, numero_recibo_inventario, id_proveedor, id_empleado, id_numero_orden_compra)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -85,6 +94,17 @@ const register = ({ connection }) => {
             .catch((err) => { throw err; });
     }
 
+    const detalleRecepcion = async(detalleRecepcion = new DetalleRecepcion()) => {
+        const sqlQuery = `INSERT INTO inventario_recibir_producto (id_numero_item, id_numero_comprobante, cantidad_recibida, costo_unitario_actual, estado_recepcion, observacion)
+        VALUES (?, ?, ?, ?, ?, ?)`;
+
+        return connection.query(sqlQuery, [
+                detalleRecepcion.idNumeroItem, detalleRecepcion.idNumeroComprobante, detalleRecepcion.cantidadRecibida, detalleRecepcion.costoUnitarioActual, detalleRecepcion.estado_recepcion, detalleRecepcion.observacion
+            ]).then((vq) => vq)
+            .catch((err) => { throw err; });
+    }
+
+
     return {
         findAllItemsWithState,
         checkDisponibilidad,
@@ -92,7 +112,9 @@ const register = ({ connection }) => {
         detalleDisponibilidad,
         checkCompra,
         detalleOrden,
-        recibirItems
+        insertFactura,
+        recibirItems,
+        detalleRecepcion
     };
 };
 
