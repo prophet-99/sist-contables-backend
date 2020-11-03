@@ -55,9 +55,20 @@ const deleteById = async (req = request, res = response) => {
     }
 };
 
+const getAllCargos = async (req = request, res = response) => {
+    try{
+        const { empleadoRepository } = await MySQLConnection.getRepositories();
+        const cargos = await empleadoRepository.getAllCargos();
+        res.json({ ok: true, cargos });
+    }catch(err){
+        res.status(500).json({ ok: false, msg: err });
+    }
+};
+
 module.exports = {
     findAll,
     findAllInactives,
     save,
-    deleteById
+    deleteById,
+    getAllCargos
 };

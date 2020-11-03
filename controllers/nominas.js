@@ -20,15 +20,18 @@ const insertNominaSueldos = async (req = request, res = response) => {
 };
 
 const insertObtenerTiempos = async (req = request, res = response) => {
-    const { fechaRegistro, horaInicio, horaFin, idEmpleado,
-        idNominaSueldo } = req.body;
+    const { tarjetasTiempo } = req.body;
     try{
         const { nominaRepository } = await MySQLConnection.getRepositories();
-        const obtenerTiempo = new ObtenerTiempo({
-            fechaRegistro, horaInicio, horaFin, idEmpleado,
-            idNominaSueldo
-        });
-        await nominaRepository.insertObtenerTiempos(obtenerTiempo);
+        for (let i = 0; i < tarjetasTiempo.length; i++) {
+            const { fechaRegistro, horaInicio, horaFin, idEmpleado,
+                idNominaSueldo } = tarjetasTiempo[i];
+            const obtenerTiempo = new ObtenerTiempo({
+                fechaRegistro, horaInicio, horaFin, idEmpleado,
+                idNominaSueldo
+            });
+            await nominaRepository.insertObtenerTiempos(obtenerTiempo);    
+        }
         res.json({ ok: true, msg: 'Obtener tiempo insertado correctamente' });
     }catch(err){
         res.status(500).json({ ok: false, msg: err });   

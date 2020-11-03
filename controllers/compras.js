@@ -28,7 +28,7 @@ const checkDisponibilidad = async(req = request, res = response) => {
         });
         await compraRepository.checkDisponibilidad(checkDisponibilidad);
         const idVerificar = await compraRepository.getIdVerificar();
-        res.json({ ok: true, idVerificar: idVerificar[0].idVerificar });
+        res.json({ ok: true, idVerificar: idVerificar[0].id });
     } catch (err) {
         res.status(500).json({ ok: false, msg: err });
     }
