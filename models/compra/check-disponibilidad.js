@@ -1,9 +1,12 @@
-class CheckDisponibilidad{
+class CheckDisponibilidad {
     constructor({
+        id,
         hora,
         fecha,
-        idEmpleado
-    }){
+        idEmpleado,
+
+    }) {
+        this.id = id;
         this.hora = hora;
         this.fecha = fecha;
         this.idEmpleado = idEmpleado;
