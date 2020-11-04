@@ -48,8 +48,19 @@ const findAllDescuentos = async (req = request, res = response) => {
     }
 };
 
+const findAllEfectivoCuentas = async (req = request, res = response) => {
+    try{
+        const { nominaRepository } = await MySQLConnection.getRepositories();
+        const nominas = await nominaRepository.findAllEfectivoCuentas();
+        res.json({ ok: true, nominas });
+    }catch(err){
+        res.status(500).json({ ok: false, msg: err });
+    }
+};
+
 module.exports = {
     insertNominaSueldos,
     insertObtenerTiempos,
-    findAllDescuentos
+    findAllDescuentos,
+    findAllEfectivoCuentas
 };

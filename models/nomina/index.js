@@ -33,10 +33,19 @@ const register = ({ connection }) => {
         .catch( (err) => { throw err; } );
     };
 
+    const findAllEfectivoCuentas = async () => {
+        const sqlQuery = `select numero_cuenta, monto, descripcion from db_sys_account.efectivo
+            inner join cuenta_contable cc on efectivo.id_codigo_cuenta_contable = cc.codigo_cuenta`;
+
+        return connection.query(sqlQuery).then( (vq) => vq )
+        .catch( (err) => { throw err; } );
+    };
+
     return {
         insertNominaSueldos,
         insertObtenerTiempos,
-        findAllDescuentos
+        findAllDescuentos,
+        findAllEfectivoCuentas
     };
 };
 
