@@ -26,9 +26,17 @@ const register = ({ connection }) => {
         .catch( (err) => { throw err; } );
     };
 
+    const findAllDescuentos = async () => {
+        const sqlQuery = `select id, descripcion, valor_porcentaje from descuento`;
+
+        return connection.query(sqlQuery).then( (vq) => vq )
+        .catch( (err) => { throw err; } );
+    };
+
     return {
         insertNominaSueldos,
-        insertObtenerTiempos
+        insertObtenerTiempos,
+        findAllDescuentos
     };
 };
 

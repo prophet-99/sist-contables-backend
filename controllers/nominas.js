@@ -38,7 +38,18 @@ const insertObtenerTiempos = async (req = request, res = response) => {
     }
 };
 
+const findAllDescuentos = async (req = request, res = response) => {
+    try{
+        const { nominaRepository } = await MySQLConnection.getRepositories();
+        const nominas = await nominaRepository.findAllDescuentos();
+        res.json({ ok: true, nominas });
+    }catch(err){
+        res.status(500).json({ ok: false, msg: err });
+    }
+};
+
 module.exports = {
     insertNominaSueldos,
-    insertObtenerTiempos
+    insertObtenerTiempos,
+    findAllDescuentos
 };

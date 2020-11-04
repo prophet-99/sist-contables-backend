@@ -105,22 +105,24 @@ const register = ({ connection }) => {
     }
 
     const findAllOrdenesCompra = async() => {
-        const sqlQuery = `SELECT numero_orden_compra, o.fecha_pedido, o.fecha_entrega_esperada, p.nombre as proveedor, p.ruc, o.descripcion,
-            o.precio_total_esperado, o.id_empleado, concat(e.nombres, ' ', e.apellidos) as empleado, e.id_cargo
+        const sqlQuery = `SELECT distinct numero_orden_compra, o.fecha_pedido, o.fecha_entrega_esperada, p.nombre, p.ruc, o.descripcion,
+            o.precio_total_esperado, o.id_empleado, e.nombres, e.id_cargo, rp.id_codigo_factura as proveedor_factura, p.id as id_proveedor
             from  ordenar_producto o
             INNER JOIN empleado e on e.id = o.id_empleado
-            INNER JOIN proveedor p on p.id = o.id_proveedor`;
+            INNER JOIN proveedor p on p.id = o.id_proveedor
+            LEFT JOIN recibir_producto rp on rp.id_numero_orden_compra = o.numero_orden_compra`;
         return connection.query(sqlQuery)
         .then((vq) => vq)
         .catch((err) => { throw err; });
     };
 
     const findAllOrdenesCompraByCodigo = async(idOrdenCompra) => {
-        const sqlQuery = `SELECT numero_orden_compra, o.fecha_pedido, o.fecha_entrega_esperada, p.nombre as proveedor, p.ruc, o.descripcion,
-            o.precio_total_esperado, o.id_empleado, concat(e.nombres, ' ', e.apellidos) as empleado, e.id_cargo
+        const sqlQuery = `SELECT distinct numero_orden_compra, o.fecha_pedido, o.fecha_entrega_esperada, p.nombre, p.ruc, o.descripcion,
+            o.precio_total_esperado, o.id_empleado, e.nombres, e.id_cargo, rp.id_codigo_factura as proveedor_factura, p.id as id_proveedor
             from  ordenar_producto o
             INNER JOIN empleado e on e.id = o.id_empleado
             INNER JOIN proveedor p on p.id = o.id_proveedor
+            LEFT JOIN recibir_producto rp on rp.id_numero_orden_compra = o.numero_orden_compra
             WHERE numero_orden_compra like concat('%', ?, '%')`;
         return connection.query(sqlQuery, [ idOrdenCompra ])
         .then((vq) => vq)
