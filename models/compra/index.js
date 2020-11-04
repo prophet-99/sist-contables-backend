@@ -104,6 +104,33 @@ const register = ({ connection }) => {
             .catch((err) => { throw err; });
     }
 
+    const getAllOrdenesCompra = async() => {
+        const sqlQuery = `SELECT numero_orden_compra, o.fecha_pedido, o.fecha_entrega_esperada, p.nombre as proveedor, p.ruc, o.descripcion,
+            o.precio_total_esperado, o.id_empleado, concat(e.nombres, ' ', e.apellidos) as empleado, e.id_cargo
+            from  ordenar_producto o
+            INNER JOIN empleado e on e.id = o.id_empleado
+            INNER JOIN proveedor p on p.id = o.id_proveedor`;
+        return connection.query(sqlQuery)
+        .then((vq) => vq)
+        .catch((err) => { throw err; });
+    };
+
+    const getAllDetalleOrdenesCompra = async(idOrden) => {
+        const sqlQuery = `SELECT o.fecha_pedido as fechaEmision, o.fecha_entrega_esperada, p.nombre as proveedor,
+            p.ruc, o.descripcion, op.id_numero_item, i.descripcion as producto, op.cantidad_orden,
+            op.precio_unitario_compra, o.precio_total_esperado, e.nombres, op.precio_unitario_compra * op.cantidad_orden as importe
+            from  ordenar_producto o
+            INNER JOIN verificar_disponibilidad v ON v.id=o.id_verificar_disponibilidad
+            INNER JOIN inventario_ordenar_producto op on op.id_numero_orden_compra = o.numero_orden_compra
+            INNER JOIN inventario i ON i.numero_item= op.id_numero_item
+            INNER JOIN empleado e on e.id = o.id_empleado
+            INNER JOIN proveedor p on p.id = o.id_proveedor
+            where numero_orden_compra like ?`;
+        return connection.query(sqlQuery, [ idOrden ])
+        .then((vq) => vq)
+        .catch((err) => { throw err; });
+    };
+
 
     return {
         findAllItemsWithState,
@@ -114,7 +141,9 @@ const register = ({ connection }) => {
         detalleOrden,
         insertFactura,
         recibirItems,
-        detalleRecepcion
+        detalleRecepcion,
+        getAllOrdenesCompra,
+        getAllDetalleOrdenesCompra
     };
 };
 

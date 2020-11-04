@@ -57,9 +57,21 @@ const deleteById = async (req = request, res = response) => {
     }
 };
 
+const getAllPlazos = async (req = request, res = response) => {
+    try{
+        const { proveedorRepository } = await MySQLConnection.getRepositories();
+        const plazos = await proveedorRepository.getPlazosEntrega() 
+        
+        res.json({ ok: true, plazos });
+    }catch(err){
+        res.status(500).json({ ok: false, msg: err });
+    }
+};
+
 module.exports = {
     findAll,
     findAllInactives,
     save,
-    deleteById
+    deleteById,
+    getAllPlazos
 };

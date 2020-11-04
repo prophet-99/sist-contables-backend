@@ -76,11 +76,20 @@ const register = ({ connection }) => {
             .catch( (err) => { throw err; } );
     };
 
+    const getPlazosEntrega = async () => {
+        const sqlQuery = 'select id, descripcion from plazo_entrega';
+
+        return connection.query(sqlQuery)
+            .then( (vq) => vq )
+            .catch( (err) => { throw err; } );
+    };
+
     return {
         findAll,
         findAllInactives,
         findByNameOrRuc,
         findByNameOrRucInactives,
+        getPlazosEntrega,
         save,
         deleteById
     };

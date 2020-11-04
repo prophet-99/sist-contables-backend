@@ -17,6 +17,7 @@ const staticFrontendMenu = [
         items: [
             {
                 title: 'Gestión de agentes',
+                id: "gestAgentes",
                 icon: 'fas fa-user',
                 routes:[
                     { route: 'clientes', name: 'Clientes' },
@@ -26,6 +27,7 @@ const staticFrontendMenu = [
             },
             {
                 title: 'Gestión de inventario',
+                id: "gestInvent",
                 icon: 'fas fa-fw fa-cog',
                 routes:[
                     { route: 'inventario', name: 'Iventario' }                    
@@ -40,6 +42,7 @@ const staticFrontendMenu = [
             {
                 title: 'Ciclo de ventas',
                 icon: 'fas fa-sync',
+                id: "cicloVent",
                 routes:[
                     { route: 'ventas', name: 'Ventas' }
                 ]
@@ -53,6 +56,7 @@ const staticFrontendMenu = [
             {
                 title: 'Ciclo de compras',
                 icon: 'fas fa-sync',
+                id: "gestCom",
                 routes:[
                     { route: 'compras', name: 'Registrar compras' },
                     { route: 'comprasComprobanteCompra', name: 'Ordenes de compra' },
@@ -68,6 +72,7 @@ const staticFrontendMenu = [
             {
                 title: 'Registro de Nóminas',
                 icon: 'fas fa-fw fa-cog',
+                id: "gestNom",
                 routes:[
                     { route: 'nominas', name: 'Nóminas' }
                 ]
@@ -81,6 +86,7 @@ const staticFrontendMenu = [
             {
                 title: 'Cuentas por pagar',
                 icon: 'fas fa-fw fa-cog',
+                id: "gestTrans",
                 routes:[
                     { route: 'nominas', name: 'Pago a proveedores' },
                     { route: 'nominas', name: 'Pago a empleados' }
@@ -89,6 +95,7 @@ const staticFrontendMenu = [
             {
                 title: 'Cuentas por cobrar',
                 icon: 'fas fa-fw fa-cog',
+                id: "gestCobr",
                 routes:[
                     { route: 'nominas', name: 'Pago de clientes' }
                 ]
@@ -101,6 +108,7 @@ const staticFrontendMenu = [
         items: [
             {
                 title: 'Visualización de libros',
+                id: "gestVisLib",
                 icon: 'fas fa-fw fa-cog',
                 routes:[
                     { route: 'diario', name: 'Libro Diario' },

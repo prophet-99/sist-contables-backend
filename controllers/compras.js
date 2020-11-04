@@ -170,6 +170,27 @@ const detalleRecepcion = async(req = request, res = response) => {
     }
 };
 
+const getAllOrdenesCompra = async(req = request, res = response) => {
+    try {
+        const { compraRepository } = await MySQLConnection.getRepositories();
+        const items = await compraRepository.getAllOrdenesCompra();
+        res.json({ ok: true, items });
+    } catch (err) {
+        res.status(500).json({ ok: false, msg: err });
+    }
+};
+
+const getAllDetalleOrdenesCompra = async(req = request, res = response) => {
+    const { idOrdenCompra } =  req.body;
+    try {
+        const { compraRepository } = await MySQLConnection.getRepositories();
+        const items = await compraRepository.getAllDetalleOrdenesCompra(idOrdenCompra);
+        res.json({ ok: true, items });
+    } catch (err) {
+        res.status(500).json({ ok: false, msg: err });
+    }
+};
+
 module.exports = {
     findAllItemsWithState,
     checkDisponibilidad,
@@ -177,5 +198,7 @@ module.exports = {
     checkCompra,
     detalleOrden,
     recibirItems,
-    detalleRecepcion
+    detalleRecepcion,
+    getAllOrdenesCompra,
+    getAllDetalleOrdenesCompra
 }
