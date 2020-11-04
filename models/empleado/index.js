@@ -79,7 +79,7 @@ const register = ({ connection }) => {
             .catch( (err) => { throw err; } );
     };
 
-    const getAllCargos = async () => {
+    const findAllCargos = async () => {
         const sqlQuery = 'select id, descripcion from cargo';
 
         return connection.query(sqlQuery)
@@ -94,7 +94,7 @@ const register = ({ connection }) => {
         findByNameOrSurnameInactives,
         save,
         deleteById,
-        getAllCargos
+        findAllCargos
     };
 };
 

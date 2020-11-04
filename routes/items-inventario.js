@@ -4,12 +4,13 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validateFields } = require('./../middlewares/check_fields');
-const { findAll, deleteById, save, findAllInactives } = require('./../controllers/items-inventario');
+const { findAll, deleteById, save, findAllInactives, findAllCategorias } = require('./../controllers/items-inventario');
 
 const router = Router();
 
 router.get('/', findAll);
 router.get('/inactives', findAllInactives);
+router.get('/categorias', findAllCategorias);
 router.post('/', [
     check('numeroItem', 'El numeroItem es obligatorio').notEmpty(),
     check('descripcion', 'La descripcion es obligatoria').notEmpty(),

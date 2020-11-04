@@ -4,13 +4,13 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validateFields } = require('./../middlewares/check_fields');
-const { findAll, deleteById, save, findAllInactives, getAllCargos } = require('./../controllers/empleados');
+const { findAll, deleteById, save, findAllInactives, findAllCargos } = require('./../controllers/empleados');
 
 const router = Router();
 
 router.get('/', findAll);
 router.get('/inactives', findAllInactives);
-router.get('/cargos', getAllCargos);
+router.get('/cargos', findAllCargos);
 router.post('/', [
     check('id', 'El id es obligatorio').notEmpty(),
     check('dni', 'El dni es obligatorio').notEmpty(),

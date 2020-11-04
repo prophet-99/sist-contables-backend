@@ -7,17 +7,17 @@ const { validateFields } = require('./../middlewares/check_fields');
 const { 
     findAllItemsWithState, checkDisponibilidad, detalleDisponibilidad, 
     checkCompra, detalleOrden, recibirItems, detalleRecepcion, 
-    getAllDetalleOrdenesCompra, getAllOrdenesCompra 
+    findAllOrdenesCompra, findAllDetalleOrdenesCompra
 } = require('./../controllers/compras');
 
 const router = Router();
 
 router.get('/itemsestado', findAllItemsWithState);
-router.get('/ordencompra', getAllOrdenesCompra);
+router.get('/ordencompra', findAllOrdenesCompra);
 router.post('/detalleordencompra', [
     check('idOrdenCompra'),
     validateFields
-], getAllDetalleOrdenesCompra);
+], findAllDetalleOrdenesCompra);
 router.post('/verificardisponibilidad', [
     check('hora').notEmpty(),
     check('fecha').notEmpty(),

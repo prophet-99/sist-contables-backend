@@ -75,13 +75,22 @@ const register = ({ connection }) => {
             .catch( (err) => { throw err; } );
     };
 
+    const findAllCategorias = async () => {
+        const sqlQuery = 'select id, descripcion from categoria';
+    
+        return connection.query(sqlQuery)
+            .then( (vq) => vq )
+            .catch( (err) => { throw err; } );
+    };
+
     return {
         findAll,
         findAllInactives,
         findByCodigoOrName,
         findByCodigoOrNameInactives,
         save,
-        deleteById
+        deleteById,
+        findAllCategorias
     };
 };
 

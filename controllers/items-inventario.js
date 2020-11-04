@@ -56,9 +56,20 @@ const deleteById = async (req = request, res = response) => {
     }
 };
 
+const findAllCategorias = async (req = request, res = response) => {
+    try{
+        const { inventarioRepository } = await MySQLConnection.getRepositories();
+        const categorias = await inventarioRepository.findAllCategorias();
+        res.json({ ok: true, categorias });
+    }catch(err){
+        res.status(500).json({ ok: false, msg: err });
+    }
+};
+
 module.exports = {
     findAll,
     findAllInactives,
     save,
-    deleteById
+    deleteById,
+    findAllCategorias
 };

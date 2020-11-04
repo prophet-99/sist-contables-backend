@@ -104,7 +104,7 @@ const register = ({ connection }) => {
             .catch((err) => { throw err; });
     }
 
-    const getAllOrdenesCompra = async() => {
+    const findAllOrdenesCompra = async() => {
         const sqlQuery = `SELECT numero_orden_compra, o.fecha_pedido, o.fecha_entrega_esperada, p.nombre as proveedor, p.ruc, o.descripcion,
             o.precio_total_esperado, o.id_empleado, concat(e.nombres, ' ', e.apellidos) as empleado, e.id_cargo
             from  ordenar_producto o
@@ -115,7 +115,19 @@ const register = ({ connection }) => {
         .catch((err) => { throw err; });
     };
 
-    const getAllDetalleOrdenesCompra = async(idOrden) => {
+    const findAllOrdenesCompraByCodigo = async(idOrdenCompra) => {
+        const sqlQuery = `SELECT numero_orden_compra, o.fecha_pedido, o.fecha_entrega_esperada, p.nombre as proveedor, p.ruc, o.descripcion,
+            o.precio_total_esperado, o.id_empleado, concat(e.nombres, ' ', e.apellidos) as empleado, e.id_cargo
+            from  ordenar_producto o
+            INNER JOIN empleado e on e.id = o.id_empleado
+            INNER JOIN proveedor p on p.id = o.id_proveedor
+            WHERE numero_orden_compra like concat('%', ?, '%')`;
+        return connection.query(sqlQuery, [ idOrdenCompra ])
+        .then((vq) => vq)
+        .catch((err) => { throw err; });
+    };
+
+    const findAllDetalleOrdenesCompra = async(idOrdenCompra) => {
         const sqlQuery = `SELECT o.fecha_pedido as fechaEmision, o.fecha_entrega_esperada, p.nombre as proveedor,
             p.ruc, o.descripcion, op.id_numero_item, i.descripcion as producto, op.cantidad_orden,
             op.precio_unitario_compra, o.precio_total_esperado, e.nombres, op.precio_unitario_compra * op.cantidad_orden as importe
@@ -126,7 +138,7 @@ const register = ({ connection }) => {
             INNER JOIN empleado e on e.id = o.id_empleado
             INNER JOIN proveedor p on p.id = o.id_proveedor
             where numero_orden_compra like ?`;
-        return connection.query(sqlQuery, [ idOrden ])
+        return connection.query(sqlQuery, [ idOrdenCompra ])
         .then((vq) => vq)
         .catch((err) => { throw err; });
     };
@@ -142,8 +154,9 @@ const register = ({ connection }) => {
         insertFactura,
         recibirItems,
         detalleRecepcion,
-        getAllOrdenesCompra,
-        getAllDetalleOrdenesCompra
+        findAllOrdenesCompra,
+        findAllOrdenesCompraByCodigo,
+        findAllDetalleOrdenesCompra
     };
 };
 
