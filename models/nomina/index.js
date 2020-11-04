@@ -34,7 +34,7 @@ const register = ({ connection }) => {
     };
 
     const findAllEfectivoCuentas = async () => {
-        const sqlQuery = `select numero_cuenta, monto, descripcion from db_sys_account.efectivo
+        const sqlQuery = `select numero_cuenta, monto, descripcion from efectivo
             inner join cuenta_contable cc on efectivo.id_codigo_cuenta_contable = cc.codigo_cuenta`;
 
         return connection.query(sqlQuery).then( (vq) => vq )

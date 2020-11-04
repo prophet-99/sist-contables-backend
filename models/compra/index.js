@@ -105,8 +105,9 @@ const register = ({ connection }) => {
     }
 
     const findAllOrdenesCompra = async() => {
-        const sqlQuery = `SELECT distinct numero_orden_compra, o.fecha_pedido, o.fecha_entrega_esperada, p.nombre, p.ruc, o.descripcion,
-            o.precio_total_esperado, o.id_empleado, e.nombres, e.id_cargo, rp.id_codigo_factura as proveedor_factura, p.id as id_proveedor
+        const sqlQuery = `SELECT distinct numero_orden_compra, o.fecha_pedido, o.fecha_entrega_esperada, p.nombre as proveedor, p.ruc, o.descripcion,
+            o.precio_total_esperado, o.id_empleado, concat(e.nombres, ' ', e.apellidos) as empleado, e.id_cargo, rp.id_codigo_factura as proveedor_factura, 
+            p.id as id_proveedor
             from  ordenar_producto o
             INNER JOIN empleado e on e.id = o.id_empleado
             INNER JOIN proveedor p on p.id = o.id_proveedor
@@ -117,8 +118,9 @@ const register = ({ connection }) => {
     };
 
     const findAllOrdenesCompraByCodigo = async(idOrdenCompra) => {
-        const sqlQuery = `SELECT distinct numero_orden_compra, o.fecha_pedido, o.fecha_entrega_esperada, p.nombre, p.ruc, o.descripcion,
-            o.precio_total_esperado, o.id_empleado, e.nombres, e.id_cargo, rp.id_codigo_factura as proveedor_factura, p.id as id_proveedor
+        const sqlQuery = `SELECT distinct numero_orden_compra, o.fecha_pedido, o.fecha_entrega_esperada, p.nombre as proveedor, p.ruc, o.descripcion,
+            o.precio_total_esperado, o.id_empleado, concat(e.nombres, ' ', e.apellidos) as empleado, e.id_cargo, rp.id_codigo_factura as proveedor_factura, 
+            p.id as id_proveedor
             from  ordenar_producto o
             INNER JOIN empleado e on e.id = o.id_empleado
             INNER JOIN proveedor p on p.id = o.id_proveedor
