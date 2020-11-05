@@ -9,7 +9,7 @@ const TomarOrden = require('./tomar-orden');
 const register = ({ connection }) => {
 
     const findAllItemsWithTasaUso = async() => {
-        const sqlQuery = `select numero_item, descripcion, ubicacion, punto_reorden, tasa_uso
+        const sqlQuery = `select *
         from db_sys_account.inventario
         order by tasa_uso desc`;
 

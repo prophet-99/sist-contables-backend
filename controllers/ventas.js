@@ -23,7 +23,7 @@ const checkDisponibilidad = async(req = request, res = response) => {
     const { hora, fecha, idEmpleado } = req.body;
     try {
         const { ventaRepository } = await MySQLConnection.getRepositories();
-        const checkDisponibilidad = new CheckDisponibilidad()({
+        const checkDisponibilidad = new CheckDisponibilidad({
             hora,
             fecha,
             idEmpleado
@@ -49,7 +49,6 @@ const detalleDisponibilidad = async(req = request, res = response) => {
                 descripcion,
                 cantidadSolicitada
             });
-
             await ventaRepository.detalleDisponibilidad(detalleDisponibilidad);
         }
         res.json({ ok: true, msg: 'Detalle de verificación registrada Correctamente' });
@@ -63,7 +62,7 @@ const addRecomendacion = async(req = request, res = response) => {
     const { numeroRecomendacion, descripcion, idVerificarDisponibilidad, idNumeroCliente } = req.body;
     try {
         const { ventaRepository } = await MySQLConnection.getRepositories();
-        const addRecomendacion = new AddRecomendacion()({
+        const addRecomendacion = new AddRecomendacion({
             numeroRecomendacion,
             descripcion,
             idVerificarDisponibilidad,
@@ -83,7 +82,7 @@ const detalleRecomendacion = async(req = request, res = response) => {
         for (let i = 0; i < detalleItems.length; i++) {
             const { numeroRecomendacion, idNumeroItem } = detalleItems[i];
             const { ventaRepository } = await MySQLConnection.getRepositories();
-            const detalleRecomendacion = new AddRecomendacion()({
+            const detalleRecomendacion = new AddRecomendacion({
                 numeroRecomendacion,
                 idNumeroItem
             });
@@ -98,10 +97,11 @@ const detalleRecomendacion = async(req = request, res = response) => {
 
 const addPedido = async(req = request, res = response) => {
 
-    const { numeroOrden, fechaPedido, fechaPrometida, condiciones, idVerificarDisponibilidad, idNumeroCliente, idEmpleado } = req.body;
+    const { numeroOrden, fechaPedido, fechaPrometida, condiciones, 
+        idVerificarDisponibilidad, idNumeroCliente, idEmpleado } = req.body;
     try {
         const { ventaRepository } = await MySQLConnection.getRepositories();
-        const addPedido = new TomarOrden()({
+        const addPedido = new TomarOrden({
             numeroOrden,
             fechaPedido,
             fechaPrometida,
@@ -124,7 +124,7 @@ const detallePedido = async(req = request, res = response) => {
         for (let i = 0; i < detalleItems.length; i++) {
             const { idNumeroOrden, idNumeroItem } = detalleItems[i];
             const { ventaRepository } = await MySQLConnection.getRepositories();
-            const detallePedido = new DetallePedido()({
+            const detallePedido = new DetallePedido({
                 idNumeroOrden,
                 idNumeroItem
             });
@@ -154,7 +154,7 @@ const enviarItems = async(req = request, res = response) => {
                 idCodigoFacturaCliente
             } = items[i];
             const { ventaRepository } = await MySQLConnection.getRepositories();
-            const enviarItems = new EnvioItems()({
+            const enviarItems = new EnvioItems({
                 id,
                 importe,
                 fechaEnvio,
@@ -180,7 +180,7 @@ const detalleEnvio = async(req = request, res = response) => {
         for (let i = 0; i < detalleItems.length; i++) {
             const { idEntregarProducto, idNumeroItem, cantidadEnviada, estadoEnvio, observacion } = detalleItems[i];
             const { ventaRepository } = await MySQLConnection.getRepositories();
-            const detalleEnvio = new DetalleEnvio()({
+            const detalleEnvio = new DetalleEnvio({
                 idEntregarProducto,
                 idNumeroItem,
                 cantidadEnviada,
