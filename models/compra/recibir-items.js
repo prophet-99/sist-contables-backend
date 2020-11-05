@@ -1,6 +1,5 @@
 class RecibirItems {
     constructor({
-
         numeroComprobante,
         fechaRecepcion,
         montoAdeuda,

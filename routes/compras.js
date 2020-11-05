@@ -7,7 +7,7 @@ const { validateFields } = require('./../middlewares/check_fields');
 const { 
     findAllItemsWithState, checkDisponibilidad, detalleDisponibilidad, 
     checkCompra, detalleOrden, recibirItems, detalleRecepcion, 
-    findAllOrdenesCompra, findAllDetalleOrdenesCompra
+    findAllOrdenesCompra, findAllDetalleOrdenesCompra, insertFactura
 } = require('./../controllers/compras');
 
 const router = Router();
@@ -45,8 +45,21 @@ router.post('/detalleorden', [
     validateFields
 ], detalleOrden);
 
+router.post('/factura', [
+    check('idFactura').notEmpty(),
+    validateFields
+], insertFactura);
+
 router.post('/recibiritems', [
-    check('items').notEmpty(),
+    check('numeroComprobante').notEmpty(),
+    check('fechaRecepcion').notEmpty(),
+    check('transportista').notEmpty(),
+    check('numeroReciboInventario').notEmpty(),
+    check('montoAdeuda').notEmpty(),
+    check('idProveedor').notEmpty(),
+    check('idEmpleado').notEmpty(),
+    check('idNumeroOrdenCompra').notEmpty(),
+    check('idCodigoFactura').notEmpty(),
     validateFields
 ], recibirItems);
 

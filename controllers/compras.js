@@ -111,37 +111,48 @@ const detalleOrden = async(req = request, res = response) => {
     }
 };
 
-const recibirItems = async(req = request, res = response) => {
-    const { items } = req.body;
+const insertFactura = async(req = request, res = response) => {
+    const { idFactura } = req.body;
     try {
-        for (let i = 0; i < items.length; i++) {
+        const { compraRepository } = await MySQLConnection.getRepositories();
+        await compraRepository.insertFactura(idFactura);
+        res.json({
+            ok: true,
+            msg: 'Factura registrada Correctamente'
+        });
+    } catch (err) {
+        res.status(500).json({ ok: false, msg: err });
+    }
+};
 
-            const {
-                numeroComprobante,
-                fechaRecepcion,
-                montoAdeuda,
-                transportista,
-                numeroReciboInventario,
-                idProveedor,
-                idEmpleado,
-                idNumeroOrdenCompra,
-                idCodigoFactura
-            } = items[i];
-            const { compraRepository } = await MySQLConnection.getRepositories();
-            const recibirItems = new RecibirItems({
-                numeroComprobante,
-                fechaRecepcion,
-                montoAdeuda,
-                transportista,
-                numeroReciboInventario,
-                idProveedor,
-                idEmpleado,
-                idNumeroOrdenCompra,
-                idCodigoFactura
-            });
-            await compraRepository.recibirItems(recibirItems);
-        }
-        res.json({ ok: true, msg: 'Detalle de la orden registrada Correctamente' });
+const recibirItems = async(req = request, res = response) => {
+    const {
+        numeroComprobante,
+        fechaRecepcion,
+        montoAdeuda,
+        transportista,
+        numeroReciboInventario,
+        idProveedor,
+        idEmpleado,
+        idNumeroOrdenCompra,
+        idCodigoFactura
+    } = req.body;
+    try {
+        const { compraRepository } = await MySQLConnection.getRepositories();
+        const recibirItems = new RecibirItems({
+            numeroComprobante,
+            fechaRecepcion,
+            montoAdeuda,
+            transportista,
+            numeroReciboInventario,
+            idProveedor,
+            idEmpleado,
+            idNumeroOrdenCompra,
+            idCodigoFactura
+        });
+        await compraRepository.recibirItems(recibirItems);
+        
+        res.json({ ok: true, msg: 'Detalle de la recepcion registrada Correctamente' });
     } catch (err) {
         return res.status(500).json({ ok: false, msg: err });
     }
@@ -200,6 +211,7 @@ module.exports = {
     detalleDisponibilidad,
     checkCompra,
     detalleOrden,
+    insertFactura,
     recibirItems,
     detalleRecepcion,
     findAllOrdenesCompra,
