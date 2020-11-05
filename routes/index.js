@@ -10,6 +10,7 @@ app.use(`${ baseAPI }/cliente`, require('./clientes'));
 app.use(`${ baseAPI }/proveedor`, require('./proveedores'));
 app.use(`${ baseAPI }/inventario/items`, require('./items-inventario'));
 app.use(`${ baseAPI }/compra`, require('./compras'));
+app.use(`${ baseAPI }/venta`, require('./ventas'));
 app.use(`${ baseAPI }/nomina`, require('./nominas'));
 
 module.exports = app;

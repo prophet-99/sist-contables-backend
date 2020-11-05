@@ -41,7 +41,7 @@ const detalleDisponibilidad = async(req = request, res = response) => {
     const { detalleItems } = req.body;
     try {
         for (let i = 0; i < detalleItems.length; i++) {
-            const { idNumeroItem, idVerificarDisponibilidad, "", cantidadSolicitada } = detalleItems[i];
+            const { idNumeroItem, idVerificarDisponibilidad, descripcion, cantidadSolicitada } = detalleItems[i];
             const { ventaRepository } = await MySQLConnection.getRepositories();
             const detalleDisponibilidad = new DetalleDisponibilidad({
                 idNumeroItem,
@@ -70,7 +70,7 @@ const addRecomendacion = async(req = request, res = response) => {
             idNumeroCliente
         });
         await ventaRepository.addRecomendacion(addRecomendacion);
-        res.json({ ok: true, 'Recomendación registrada Correctamente' });
+        res.json({ ok: true, msg: 'Recomendación registrada Correctamente' });
     } catch (err) {
         res.status(500).json({ ok: false, msg: err });
     }
@@ -111,7 +111,7 @@ const addPedido = async(req = request, res = response) => {
             idEmpleado
         });
         await ventaRepository.addPedido(addPedido);
-        res.json({ ok: true, 'Pedido registrado Correctamente' });
+        res.json({ ok: true, msg: 'Pedido registrado Correctamente' });
     } catch (err) {
         res.status(500).json({ ok: false, msg: err });
     }
@@ -195,6 +195,7 @@ const detalleEnvio = async(req = request, res = response) => {
         return res.status(500).json({ ok: false, msg: err });
     }
 };
+
 
 
 

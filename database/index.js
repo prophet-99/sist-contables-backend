@@ -9,7 +9,7 @@ const proveedor = require('./../models/proveedor');
 const inventario = require('./../models/inventario');
 const compra = require('./../models/compra');
 const nomina = require('./../models/nomina');
-const venta = require('../controllers/venta');
+const venta = require('./../models/venta');
 
 class MySQLServerConnection {
     static instance;
