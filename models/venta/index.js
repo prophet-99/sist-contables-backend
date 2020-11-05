@@ -82,21 +82,22 @@ const register = ({ connection }) => {
     }
 
     const detallePedido = async(detallePedido = new DetallePedido()) => {
-        const sqlQuery = `INSERT INTO orden_inventario (id_numero_orden, id_numero_item)
-                        VALUES (?,?)`;
+        const sqlQuery = `INSERT INTO orden_inventario (id_numero_orden, id_numero_item, descuento)
+                        VALUES (?,?, 0)`;
 
         return connection.query(sqlQuery, [
-                detallePedido.idNumeroOrden, detallePedido.idNumeroItem, detallePedido.cantidad, detallePedido.descuento
+                detallePedido.idNumeroOrden, detallePedido.idNumeroItem
             ]).then((vq) => vq)
             .catch((err) => { throw err; });
     }
     const envioItems = async(envioItems = new EnvioItems()) => {
-        const sqlQuery = `insert into entregar_producto (id, importe, fecha_envio, fecha_cierre, numero_comprobante, id_numero_cliente, id_empleado, id_numero_orden, id_codigo_factura_cliente)
-        VALUES (?,?,?,?,?,?,?,?,?);`;
-
+        const sqlQuery = `insert into entregar_producto (importe, fecha_envio, fecha_cierre, numero_comprobante,
+            id_numero_cliente, id_empleado, id_numero_orden, id_codigo_factura_cliente)
+            VALUES (?,?,?,?,?,?,?,?);`;
+            
         return connection.query(sqlQuery, [
-                envioItems.id, envioItems.importe, envioItems.fechaEnvio, envioItems.fechaCierre, envioItems.numeroComprobante, envioItems.idNumeroCliente,
-                envioItems.idEmpleado, envioItems.numeroOrden, envioItems.idCodigoFacturaCliente
+                envioItems.importe, envioItems.fechaEnvio, envioItems.fechaCierre, envioItems.numeroComprobante, 
+                envioItems.idNumeroCliente, envioItems.idEmpleado, envioItems.idNumeroOrden, envioItems.idCodigoFacturaCliente
             ]).then((vq) => vq)
             .catch((err) => { throw err; });
     }
@@ -123,7 +124,6 @@ const register = ({ connection }) => {
         detallePedido,
         envioItems,
         detalleEnvio
-
     };
 };
 

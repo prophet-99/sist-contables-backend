@@ -110,7 +110,7 @@ const addPedido = async(req = request, res = response) => {
             idNumeroCliente,
             idEmpleado
         });
-        await ventaRepository.addPedido(addPedido);
+        await ventaRepository.tomarOrden(addPedido);
         res.json({ ok: true, msg: 'Pedido registrado Correctamente' });
     } catch (err) {
         res.status(500).json({ ok: false, msg: err });
@@ -143,7 +143,6 @@ const enviarItems = async(req = request, res = response) => {
         for (let i = 0; i < items.length; i++) {
 
             const {
-                id,
                 importe,
                 fechaEnvio,
                 fechaCierre,
@@ -155,7 +154,6 @@ const enviarItems = async(req = request, res = response) => {
             } = items[i];
             const { ventaRepository } = await MySQLConnection.getRepositories();
             const enviarItems = new EnvioItems({
-                id,
                 importe,
                 fechaEnvio,
                 fechaCierre,
@@ -165,7 +163,7 @@ const enviarItems = async(req = request, res = response) => {
                 idNumeroOrden,
                 idCodigoFacturaCliente
             });
-            await ventaRepository.enviarItems(enviarItems);
+            await ventaRepository.envioItems(enviarItems);
         }
         res.json({ ok: true, msg: 'Detalle de la orden registrada Correctamente' });
     } catch (err) {
