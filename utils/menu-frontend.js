@@ -30,7 +30,8 @@ const staticFrontendMenu = [
                 id: "gestInvent",
                 icon: 'fas fa-fw fa-cog',
                 routes:[
-                    { route: 'inventario', name: 'Iventario' }                    
+                    { route: 'inventario', name: 'Iventario' },
+                    { route: 'inventarioactivosfijos', name: 'Inventario A. Fijos' }                    
                 ]
             },   
         ]
