@@ -9,12 +9,8 @@ const proveedor = require('./../models/proveedor');
 const inventario = require('./../models/inventario');
 const compra = require('./../models/compra');
 const nomina = require('./../models/nomina');
-<<<<<<< HEAD
 const venta = require('./../models/venta');
-=======
 const estadoFinanciero = require('./../models/estado-financiero');
-const venta = require('../controllers/venta');
->>>>>>> 5ff06ffd678810f4a1bd31769f4f86b49ff5b460
 
 class MySQLServerConnection {
     static instance;
