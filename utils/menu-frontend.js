@@ -31,7 +31,7 @@ const staticFrontendMenu = [
                 icon: 'fas fa-fw fa-cog',
                 routes:[
                     { route: 'inventario', name: 'Iventario' },
-                    { route: 'inventarioactivosfijos', name: 'Inventario A. Fijos' }                    
+                    { route: 'inventarioactivosfijos', name: 'Activos fijos' }                    
                 ]
             },   
         ]
