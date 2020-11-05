@@ -1,14 +1,15 @@
 /**
-* Route: /api/v1/inventario/items
-*/
+ * Route: /api/v1/inventario/items
+ */
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validateFields } = require('./../middlewares/check_fields');
-const { findAll, deleteById, save, findAllInactives, findAllCategorias } = require('./../controllers/items-inventario');
+const { findAll, findAllActivos, deleteById, save, findAllInactives, findAllCategorias } = require('./../controllers/items-inventario');
 
 const router = Router();
 
 router.get('/', findAll);
+router.get('/activosfijos', findAllActivos);
 router.get('/inactives', findAllInactives);
 router.get('/categorias', findAllCategorias);
 router.post('/', [
