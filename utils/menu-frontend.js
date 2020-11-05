@@ -13,7 +13,7 @@
 const staticFrontendMenu = [
     {
         title: 'Mantenimientos',
-        roles: [ 1, 12 ],
+        roles: [ 1, 6 ],
         items: [
             {
                 title: 'Gestión de agentes',
@@ -24,21 +24,27 @@ const staticFrontendMenu = [
                     { route: 'proveedor', name: 'Proveedores' },
                     { route: 'empleados', name: 'Empleados' }
                 ]
-            },
+            }
+        ]
+    },
+    {
+        title: 'Inventario',
+        roles: [ 1, 3, 4 ],
+        items: [
             {
                 title: 'Gestión de inventario',
                 id: "gestInvent",
                 icon: 'fas fa-fw fa-cog',
                 routes:[
-                    { route: 'inventario', name: 'Iventario' },
+                    { route: 'inventario', name: 'Inventario' },
                     { route: 'inventarioactivosfijos', name: 'Activos fijos' }                    
                 ]
-            },   
+            }
         ]
     },
     {
         title: 'Ventas',
-        roles: [ 1, 2, 3 ],
+        roles: [ 1, 3 ],
         items: [
             {
                 title: 'Ciclo de ventas',
@@ -103,21 +109,21 @@ const staticFrontendMenu = [
     //         }
     //     ]
     // },
-    {
-        title: 'Libros',
-        roles: [ 1, 10 ],
-        items: [
-            {
-                title: 'Visualización de libros',
-                id: "gestVisLib",
-                icon: 'fas fa-fw fa-cog',
-                routes:[
-                    // { route: 'diario', name: 'Libro Diario' },
-                    { route: 'diario', name: 'Libro Mayor' },
-                ]
-            }
-        ]
-    } 
+    // {
+    //     title: 'Libros',
+    //     roles: [ 1, 10 ],
+    //     items: [
+    //         {
+    //             title: 'Visualización de libros',
+    //             id: "gestVisLib",
+    //             icon: 'fas fa-fw fa-cog',
+    //             routes:[
+    //                 // { route: 'diario', name: 'Libro Diario' },
+    //                 { route: 'diario', name: 'Libro Mayor' },
+    //             ]
+    //         }
+    //     ]
+    // } 
 ];
 
 module.exports = { staticFrontendMenu };
