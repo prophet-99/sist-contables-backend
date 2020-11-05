@@ -184,19 +184,19 @@ const detalleRecepcion = async(req = request, res = response) => {
 
 const findAllOrdenesCompra = async(req = request, res = response) => {
     const { ordencompra } = req.query;
-    try{
+    try {
         const { compraRepository } = await MySQLConnection.getRepositories();
-        const items = (!ordencompra) ? 
+        const items = (!ordencompra) ?
             await compraRepository.findAllOrdenesCompra() :
             await compraRepository.findAllOrdenesCompraByCodigo(ordencompra);
         res.json({ ok: true, items });
-    }catch(err){
+    } catch (err) {
         res.status(500).json({ ok: false, msg: err });
     }
 };
 
 const findAllDetalleOrdenesCompra = async(req = request, res = response) => {
-    const { idOrdenCompra } =  req.body;
+    const { idOrdenCompra } = req.body;
     try {
         const { compraRepository } = await MySQLConnection.getRepositories();
         const items = await compraRepository.findAllDetalleOrdenesCompra(idOrdenCompra);
