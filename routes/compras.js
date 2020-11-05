@@ -7,7 +7,8 @@ const { validateFields } = require('./../middlewares/check_fields');
 const { 
     findAllItemsWithState, checkDisponibilidad, detalleDisponibilidad, 
     checkCompra, detalleOrden, recibirItems, detalleRecepcion, 
-    findAllOrdenesCompra, findAllDetalleOrdenesCompra, insertFactura
+    findAllOrdenesCompra, findAllDetalleOrdenesCompra, insertFactura, 
+    desembolsarEfectivo
 } = require('./../controllers/compras');
 
 const router = Router();
@@ -68,5 +69,23 @@ router.post('/detallerecibir', [
     validateFields
 ], detalleRecepcion);
 
+router.post('/desembolsarefectivo', [
+    check('monto').notEmpty(),
+    check('fecha').notEmpty(),
+    check('idEmpleado').notEmpty(),
+    check('idNumeroCuenta').notEmpty(),
+    check('idNumeroOrdenCompra').notEmpty(),
+    check('idCodigoFactura').notEmpty(),
+    check('idProveedor').notEmpty(),
+    validateFields
+], desembolsarEfectivo);
+
 
 module.exports = router;
+            
+            
+            
+            
+            
+            
+            

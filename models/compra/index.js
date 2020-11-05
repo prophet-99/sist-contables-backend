@@ -4,6 +4,7 @@ const DetalleDisponibilidad = require('./detalle-verificar');
 const DetalleOrden = require('./detalle-orden');
 const RecibirItems = require('./recibir-items');
 const DetalleRecepcion = require('./detalle-recepcion');
+const DesembolsoEfectivo = require('./desembolso-efectivo');
 
 const register = ({ connection }) => {
 
@@ -107,11 +108,12 @@ const register = ({ connection }) => {
     const findAllOrdenesCompra = async() => {
         const sqlQuery = `SELECT distinct numero_orden_compra, o.fecha_pedido, o.fecha_entrega_esperada, p.nombre as proveedor, p.ruc, o.descripcion,
             o.precio_total_esperado, o.id_empleado, concat(e.nombres, ' ', e.apellidos) as empleado, e.id_cargo, rp.id_codigo_factura as proveedor_factura, 
-            p.id as id_proveedor
+            p.id as id_proveedor, dc.id as pago
             from  ordenar_producto o
-            INNER JOIN empleado e on e.id = o.id_empleado
-            INNER JOIN proveedor p on p.id = o.id_proveedor
-            LEFT JOIN recibir_producto rp on rp.id_numero_orden_compra = o.numero_orden_compra`;
+            inner join empleado e on e.id = o.id_empleado
+            inner join proveedor p on p.id = o.id_proveedor
+            left join recibir_producto rp on rp.id_numero_orden_compra = o.numero_orden_compra
+            left join desembolsar_efectivo_compras dc on dc.id_numero_orden_compra = numero_orden_compra`;
         return connection.query(sqlQuery)
         .then((vq) => vq)
         .catch((err) => { throw err; });
@@ -120,11 +122,12 @@ const register = ({ connection }) => {
     const findAllOrdenesCompraByCodigo = async(idOrdenCompra) => {
         const sqlQuery = `SELECT distinct numero_orden_compra, o.fecha_pedido, o.fecha_entrega_esperada, p.nombre as proveedor, p.ruc, o.descripcion,
             o.precio_total_esperado, o.id_empleado, concat(e.nombres, ' ', e.apellidos) as empleado, e.id_cargo, rp.id_codigo_factura as proveedor_factura, 
-            p.id as id_proveedor
+            p.id as id_proveedor, dc.id as pago
             from  ordenar_producto o
-            INNER JOIN empleado e on e.id = o.id_empleado
-            INNER JOIN proveedor p on p.id = o.id_proveedor
-            LEFT JOIN recibir_producto rp on rp.id_numero_orden_compra = o.numero_orden_compra
+            inner join empleado e on e.id = o.id_empleado
+            inner join proveedor p on p.id = o.id_proveedor
+            left join recibir_producto rp on rp.id_numero_orden_compra = o.numero_orden_compra
+            left join desembolsar_efectivo_compras dc on dc.id_numero_orden_compra = numero_orden_compra
             WHERE numero_orden_compra like concat('%', ?, '%')`;
         return connection.query(sqlQuery, [ idOrdenCompra ])
         .then((vq) => vq)
@@ -147,6 +150,16 @@ const register = ({ connection }) => {
         .catch((err) => { throw err; });
     };
 
+    const desembolsarEfectivo = async (desembolsoEfectivo = new DesembolsoEfectivo()) => {
+        const sqlQuery = `call usp_desembolsar_compras(?, ?, ?, ?, ?, ?, ?)`;
+
+        return connection.query(sqlQuery, [ 
+            desembolsoEfectivo.monto, desembolsoEfectivo.fecha, desembolsoEfectivo.idEmpleado,
+            desembolsoEfectivo.idNumeroCuenta, desembolsoEfectivo.idNumeroOrdenCompra, 
+            desembolsoEfectivo.idCodigoFactura, desembolsoEfectivo.idProveedor
+        ]).then((vq) => vq)
+        .catch((err) => { throw err; });
+    };
 
     return {
         findAllItemsWithState,
@@ -160,7 +173,8 @@ const register = ({ connection }) => {
         detalleRecepcion,
         findAllOrdenesCompra,
         findAllOrdenesCompraByCodigo,
-        findAllDetalleOrdenesCompra
+        findAllDetalleOrdenesCompra,
+        desembolsarEfectivo
     };
 };
 
