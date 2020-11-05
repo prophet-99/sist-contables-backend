@@ -4,11 +4,13 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validateFields } = require('../middlewares/check_fields');
-const { insertNominaSueldos, insertObtenerTiempos, findAllDescuentos, findAllEfectivoCuentas } = require('../controllers/nominas');
+const { insertNominaSueldos, insertObtenerTiempos, 
+findAllDescuentos, findAllEfectivoCuentas, findAllSalariosDescuento } = require('../controllers/nominas');
 
 const router = Router();
 
 router.get('/descuentos', findAllDescuentos);
+router.get('/salariospordescuento', findAllSalariosDescuento);
 router.get('/efectivocuentas', findAllEfectivoCuentas);
 router.post('/nominasueldos', [
     check('cantidad', 'La cantidad es obligatoria').notEmpty(),

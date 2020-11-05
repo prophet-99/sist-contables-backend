@@ -41,7 +41,19 @@ const register = ({ connection }) => {
         .catch( (err) => { throw err; } );
     };
 
+    const findAllSalariosDescuento = async () => {
+        const sqlQuery = `SELECT e.nombres, e.apellidos, e.tarifa_pago, d.valor_porcentaje, 
+            e.tarifa_pago-(e.tarifa_pago*(d.valor_porcentaje)) AS 'SALDO NETO'
+            FROM nomina_sueldos ns
+            INNER JOIN descuento d ON ns.id_descuento = d.id
+            INNER JOIN empleado e ON e.id = ns.id_empleado`;
+
+        return connection.query(sqlQuery).then( (vq) => vq )
+        .catch( (err) => { throw err; } );
+    };
+
     return {
+        findAllSalariosDescuento,
         insertNominaSueldos,
         insertObtenerTiempos,
         findAllDescuentos,
