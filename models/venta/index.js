@@ -10,7 +10,7 @@ const register = ({ connection }) => {
 
     const findAllItemsWithTasaUso = async() => {
         const sqlQuery = `select *
-        from db_sys_account.inventario
+        from inventario
         order by tasa_uso desc`;
 
         return connection.query(sqlQuery)
