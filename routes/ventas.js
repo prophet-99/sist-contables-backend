@@ -12,7 +12,7 @@ const {
     detalleRecomendacion,
     addPedido,
     detallePedido,
-    envioItems,
+    enviarItems,
     detalleEnvio,
 } = require('./../controllers/ventas');
 
@@ -56,6 +56,14 @@ router.post('/detallepedido', [
     check('detalleItems').notEmpty(),
     validateFields
 ], detallePedido);
+router.post('/enviaritems', [
+    check('items').notEmpty(),
+    validateFields
+], enviarItems);
+router.post('/detalleenvio', [
+    check('items').notEmpty(),
+    validateFields
+], detalleEnvio);
 
 
 
