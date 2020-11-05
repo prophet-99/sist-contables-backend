@@ -12,5 +12,6 @@ app.use(`${ baseAPI }/inventario/items`, require('./items-inventario'));
 app.use(`${ baseAPI }/compra`, require('./compras'));
 app.use(`${ baseAPI }/venta`, require('./ventas'));
 app.use(`${ baseAPI }/nomina`, require('./nominas'));
+app.use(`${ baseAPI }/estadofinanciero`, require('./estados-financieros'));
 
 module.exports = app;

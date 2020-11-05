@@ -6,6 +6,7 @@ const CheckDisponibilidad = require('./../models/compra/check-disponibilidad');
 const DetalleOrden = require('./../models/compra/detalle-orden');
 const RecibirItems = require('../models/compra/recibir-items');
 const DetalleRecepcion = require('../models/compra/detalle-recepcion');
+const DesembolsoEfectivo = require('../models/compra/desembolso-efectivo');
 
 const findAllItemsWithState = async(req = request, res = response) => {
     try {
@@ -205,6 +206,27 @@ const findAllDetalleOrdenesCompra = async(req = request, res = response) => {
     }
 };
 
+const desembolsarEfectivo = async(req = request, res = response) => {
+    const { monto, fecha, idEmpleado, idNumeroCuenta, idNumeroOrdenCompra, 
+        idCodigoFactura, idProveedor } = req.body;
+    try {
+        const { compraRepository } = await MySQLConnection.getRepositories();
+        const desembolsoEfectivo = new DesembolsoEfectivo({
+            monto,
+            fecha,
+            idEmpleado,
+            idNumeroCuenta,
+            idNumeroOrdenCompra,
+            idCodigoFactura,
+            idProveedor
+        });
+        await compraRepository.desembolsarEfectivo(desembolsoEfectivo);
+        res.json({ ok: true, msg: 'Desembolso realizado correctamente' });
+    } catch (err) {
+        return res.status(500).json({ ok: false, msg: err });
+    }
+};
+
 module.exports = {
     findAllItemsWithState,
     checkDisponibilidad,
@@ -214,6 +236,7 @@ module.exports = {
     insertFactura,
     recibirItems,
     detalleRecepcion,
+    desembolsarEfectivo,
     findAllOrdenesCompra,
-    findAllDetalleOrdenesCompra
+    findAllDetalleOrdenesCompra,
 }

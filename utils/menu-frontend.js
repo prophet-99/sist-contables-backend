@@ -79,29 +79,29 @@ const staticFrontendMenu = [
             }
         ]
     },
-    {
-        title: 'Transacciones monetarias',
-        roles: [ 1, 5 ],
-        items: [
-            {
-                title: 'Cuentas por pagar',
-                icon: 'fas fa-fw fa-cog',
-                id: "gestTrans",
-                routes:[
-                    { route: 'nominas', name: 'Pago a proveedores' },
-                    { route: 'nominas', name: 'Pago a empleados' }
-                ]
-            },
-            {
-                title: 'Cuentas por cobrar',
-                icon: 'fas fa-fw fa-cog',
-                id: "gestCobr",
-                routes:[
-                    { route: 'nominas', name: 'Pago de clientes' }
-                ]
-            }
-        ]
-    },
+    // {
+    //     title: 'Transacciones monetarias',
+    //     roles: [ 1, 5 ],
+    //     items: [
+    //         {
+    //             title: 'Cuentas por pagar',
+    //             icon: 'fas fa-fw fa-cog',
+    //             id: "gestTrans",
+    //             routes:[
+    //                 { route: 'nominas', name: 'Pago a proveedores' },
+    //                 { route: 'nominas', name: 'Pago a empleados' }
+    //             ]
+    //         },
+    //         {
+    //             title: 'Cuentas por cobrar',
+    //             icon: 'fas fa-fw fa-cog',
+    //             id: "gestCobr",
+    //             routes:[
+    //                 { route: 'nominas', name: 'Pago de clientes' }
+    //             ]
+    //         }
+    //     ]
+    // },
     {
         title: 'Libros',
         roles: [ 1, 10 ],
@@ -111,12 +111,12 @@ const staticFrontendMenu = [
                 id: "gestVisLib",
                 icon: 'fas fa-fw fa-cog',
                 routes:[
-                    { route: 'diario', name: 'Libro Diario' },
+                    // { route: 'diario', name: 'Libro Diario' },
                     { route: 'diario', name: 'Libro Mayor' },
                 ]
             }
         ]
-    },
+    } 
 ];
 
 module.exports = { staticFrontendMenu };
