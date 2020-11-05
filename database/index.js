@@ -11,7 +11,10 @@ const compra = require('./../models/compra');
 const nomina = require('./../models/nomina');
 const venta = require('./../models/venta');
 const estadoFinanciero = require('./../models/estado-financiero');
+<<<<<<< HEAD
 
+=======
+>>>>>>> d24bbb370f9ed926a9c84413ac030040bb73b0be
 
 class MySQLServerConnection {
     static instance;
