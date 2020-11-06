@@ -99,12 +99,14 @@ const register = ({ connection }) => {
     }
 
     const recibirItems = async(items = new RecibirItems()) => {
-        const sqlQuery = `INSERT into recibir_producto (numero_comprobante, fecha_recepcion, monto_adeuda, transportista, numero_recibo_inventario, id_proveedor, id_empleado, id_numero_orden_compra)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+        const sqlQuery = `INSERT into recibir_producto (numero_comprobante, fecha_recepcion, monto_adeuda, transportista, numero_recibo_inventario, 
+            id_proveedor, id_empleado, id_numero_orden_compra, id_codigo_factura)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
         return connection.query(sqlQuery, [
                 items.numeroComprobante, items.fechaRecepcion, items.montoAdeuda, items.transportista,
-                items.numeroReciboInventario, items.idProveedor, items.idEmpleado, items.idNumeroOrdenCompra
+                items.numeroReciboInventario, items.idProveedor, items.idEmpleado, items.idNumeroOrdenCompra,
+                items.idCodigoFactura
             ]).then((vq) => vq)
             .catch((err) => { throw err; });
     }
