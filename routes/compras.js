@@ -8,12 +8,13 @@ const {
     findAllItemsWithState, checkDisponibilidad, detalleDisponibilidad, 
     checkCompra, detalleOrden, recibirItems, detalleRecepcion, 
     findAllOrdenesCompra, findAllDetalleOrdenesCompra, insertFactura, 
-    desembolsarEfectivo
+    desembolsarEfectivo, findAllItemsWithStateFixeds
 } = require('./../controllers/compras');
 
 const router = Router();
 
 router.get('/itemsestado', findAllItemsWithState);
+router.get('/itemsestadofijos', findAllItemsWithStateFixeds);
 router.get('/ordencompra', findAllOrdenesCompra);
 router.post('/detalleordencompra', [
     check('idOrdenCompra'),

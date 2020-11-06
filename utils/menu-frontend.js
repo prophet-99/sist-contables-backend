@@ -73,6 +73,22 @@ const staticFrontendMenu = [
         ]
     },
     {
+        title: 'Activos fijos',
+        roles: [ 1, 3, 6 ],
+        items: [
+            {
+                title: 'Ciclo de activos fijos',
+                icon: 'fas fa-sync',
+                id: "gestAct",
+                routes:[
+                    { route: 'comprasActivosFijos', name: 'Registrar compras' },
+                    { route: 'comprasComprobanteCompra', name: 'Ordenes de compra' },
+                    { route: 'comprasRecibirProductos', name: 'Recepcionar compras' }
+                ]
+            }
+        ]
+    },
+    {
         title: 'Nóminas',
         roles: [ 1, 6 ],
         items: [

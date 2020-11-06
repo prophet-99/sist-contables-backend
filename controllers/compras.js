@@ -18,6 +18,16 @@ const findAllItemsWithState = async(req = request, res = response) => {
     }
 };
 
+const findAllItemsWithStateFixeds = async(req = request, res = response) => {
+    try {
+        const { compraRepository } = await MySQLConnection.getRepositories();
+        const items = await compraRepository.findAllItemsWithStateFixeds();
+        res.json({ ok: true, items });
+    } catch (err) {
+        res.status(500).json({ ok: false, msg: err });
+    }
+};
+
 const checkDisponibilidad = async(req = request, res = response) => {
 
     const { hora, fecha, idEmpleado } = req.body;
@@ -239,4 +249,5 @@ module.exports = {
     desembolsarEfectivo,
     findAllOrdenesCompra,
     findAllDetalleOrdenesCompra,
+    findAllItemsWithStateFixeds
 }
