@@ -107,12 +107,63 @@ const register = ({ connection }) => {
         VALUES (?,?,?,?,?);`;
 
         return connection.query(sqlQuery, [
-                detalleEnvio.idEntregarProducto, detalleEnvio.idNumeroItem, detalleEnvio.cantidadEnviada, detalleEnvio.estadoEnvio, detalleEnvio.observacion
+                detalleEnvio.idEntregarProducto, detalleEnvio.idNumeroItem, detalleEnvio.cantidadEnviada, 
+                detalleEnvio.estadoEnvio, detalleEnvio.observacion
             ]).then((vq) => vq)
             .catch((err) => { throw err; });
     }
 
+    const insertFacturaCliente = async(codigoFactura) => {
+        const sqlQuery = `insert into factura_cliente values(?)`;
 
+        return connection.query(sqlQuery, [ codigoFactura ])
+            .then((vq) => vq)
+            .catch((err) => { throw err; });
+    };
+
+    const findAllTomarOrdenes = async() => {
+        const sqlQuery = `select distinct ep.fecha_envio, ep.fecha_cierre, ep.numero_comprobante, c.id as idCliente, c.nombre as cliente,
+            emp.id as idEmpleado, concat(emp.nombres, ' ', emp.apellidos) as empleado, importe, id_codigo_factura_cliente as factura,
+            t.numero_orden as numeroOrden
+            from entregar_producto ep
+            inner join cliente c on c.id = ep.id_numero_cliente
+            inner join empleado emp on emp.id = ep.id_empleado
+            inner join tomar_orden t on ep.id_numero_orden = t.numero_orden`;
+
+        return connection.query(sqlQuery)
+        .then((vq) => vq)
+        .catch((err) => { throw err; });
+    };
+
+    const findAllTomarOrdenesByCodigo = async(idTomarOrden) => {
+        const sqlQuery = `select distinct ep.fecha_envio, ep.fecha_cierre, ep.numero_comprobante, c.id as idCliente, c.nombre as cliente,
+            emp.id as idEmpleado, concat(emp.nombres, ' ', emp.apellidos) as empleado, importe, id_codigo_factura_cliente as factura,
+            t.numero_orden as numeroOrden
+            from entregar_producto ep
+            inner join cliente c on c.id = ep.id_numero_cliente
+            inner join empleado emp on emp.id = ep.id_empleado
+            inner join tomar_orden t on ep.id_numero_orden = t.numero_orden
+            where id_codigo_factura_cliente like ?`;
+
+        return connection.query(sqlQuery, [ idTomarOrden ])
+        .then((vq) => vq)
+        .catch((err) => { throw err; });
+    };
+
+    const findAllDetalleRecomendaciones = async(idRecomendacion) => {
+        const sqlQuery = `select numero_recomendacion, re.descripcion as recomendacion, fecha, i.numero_item, i.descripcion as item,
+            i.cantidad_disponible, i.costo_unitario
+            from registrar_recomendacion re
+            inner join fijar_recomendacion fr on fr.id_numero_recomendacion = re.numero_recomendacion
+            inner join verificar_disponibilidad vd on vd.id = re.id_verificar_disponibilidad
+            inner join inventario i on i.numero_item = fr.id_numero_item
+            where numero_recomendacion like ?`;
+
+        return connection.query(sqlQuery, [ idRecomendacion ])
+        .then((vq) => vq)
+        .catch((err) => { throw err; });
+    };
+    
     return {
         findAllItemsWithTasaUso,
         checkDisponibilidad,
@@ -123,7 +174,11 @@ const register = ({ connection }) => {
         tomarOrden,
         detallePedido,
         envioItems,
-        detalleEnvio
+        detalleEnvio,
+        insertFacturaCliente,
+        findAllTomarOrdenes,
+        findAllTomarOrdenesByCodigo,
+        findAllDetalleRecomendaciones
     };
 };
 
