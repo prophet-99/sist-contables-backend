@@ -68,10 +68,22 @@ const findAllSalariosDescuento = async (req = request, res = response) =>  {
     }
 };
 
+const mostrarHorasTrabajadasXidXfecha = async (req = request, res = response) =>  {
+    const {idEmpleado, fechaRegistro} = req.body;
+    try{
+        const { nominaRepository } = await MySQLConnection.getRepositories();
+        const nominas = await nominaRepository.mostrarHorasTrabajadasXidXfecha(idEmpleado,fechaRegistro);
+        res.json({ ok: true, nominas });
+    }catch (err){
+        res.status(500).json({ ok: false, msg: err });
+    }
+};
+
 module.exports = {
     insertNominaSueldos,
     insertObtenerTiempos,
     findAllDescuentos,
     findAllEfectivoCuentas,
-    findAllSalariosDescuento
+    findAllSalariosDescuento,
+    mostrarHorasTrabajadasXidXfecha
 };

@@ -1,3 +1,4 @@
+const e = require('express');
 const NominaSueldos = require('./nomina-sueldos');
 const ObtenerTiempo = require('./obtener-tiempo');
 
@@ -51,13 +52,25 @@ const register = ({ connection }) => {
         return connection.query(sqlQuery).then( (vq) => vq )
         .catch( (err) => { throw err; } );
     };
+    
+    const mostrarHorasTrabajadasXidXfecha = async (idEmpleado, fechaRegistro) => {
+        const sqlQuery = `SELECT e.id, e.nombres, e.apellidos,
+        ob.fecha_registro, ob.hora_inicio, ob.hora_fin
+        FROM obtener_tiempo ob
+        INNER JOIN empleado e ON ob.id_empleado = e.id
+        WHERE e.id=? AND fecha_registro =?;`;
+
+        return connection.query(sqlQuery[idEmpleado, fechaRegistro]).then( (vq) => vq )
+        .catch( (err) => { throw err; } );
+    };
 
     return {
         findAllSalariosDescuento,
         insertNominaSueldos,
         insertObtenerTiempos,
         findAllDescuentos,
-        findAllEfectivoCuentas
+        findAllEfectivoCuentas,
+        mostrarHorasTrabajadasXidXfecha
     };
 };
 

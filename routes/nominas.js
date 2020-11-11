@@ -5,7 +5,7 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 const { validateFields } = require('../middlewares/check_fields');
 const { insertNominaSueldos, insertObtenerTiempos, 
-findAllDescuentos, findAllEfectivoCuentas, findAllSalariosDescuento } = require('../controllers/nominas');
+findAllDescuentos, findAllEfectivoCuentas, findAllSalariosDescuento, mostrarHorasTrabajadasXidXfecha} = require('../controllers/nominas');
 
 const router = Router();
 
@@ -26,5 +26,7 @@ router.post('/obtenertiempos', [
     check('tarjetasTiempo', 'Las tarjetas de tiempo son obligatorios').notEmpty(),    
     validateFields
 ], insertObtenerTiempos);
-
+router.post('/consultas',[check('idEmpleado','el id del empleado es obligatorio').notEmpty(), 
+            check('fechaRegistro','la fecha es necesaria').notEmpty(), validateFields
+], mostrarHorasTrabajadasXidXfecha);
 module.exports = router;
