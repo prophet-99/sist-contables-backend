@@ -14,12 +14,24 @@ const {
     detallePedido,
     enviarItems,
     detalleEnvio,
+    findAllTomarOrdenes,
+    findAllDetalleRecomendaciones,
+    findAllTomarOrdenesByCodigo
 } = require('./../controllers/ventas');
 
 const router = Router();
 
 router.get('/itemsestado', findAllItemsWithTasaUso);
 router.get('/disponibilidad', checkDisponibilidad);
+router.get('/tomarordenes', findAllTomarOrdenes);
+router.post('/tomarordenes', [
+    check('idTomarOrden').notEmpty(),
+    validateFields
+], findAllTomarOrdenesByCodigo);
+router.post('/detallerecomendacion', [
+    check('idRecomendacion').notEmpty(),
+    validateFields
+], findAllDetalleRecomendaciones);
 
 router.post('/verificardisponibilidad', [
     check('hora').notEmpty(),

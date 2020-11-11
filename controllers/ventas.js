@@ -139,9 +139,12 @@ const detallePedido = async(req = request, res = response) => {
 
 const enviarItems = async(req = request, res = response) => {
     const { items } = req.body;
+    const { ventaRepository } = await MySQLConnection.getRepositories();
+    const { numeroComprobante } = items[0];
+    await ventaRepository.insertFacturaCliente(numeroComprobante);
+
     try {
         for (let i = 0; i < items.length; i++) {
-
             const {
                 importe,
                 fechaEnvio,
@@ -152,7 +155,6 @@ const enviarItems = async(req = request, res = response) => {
                 idNumeroOrden,
                 idCodigoFacturaCliente
             } = items[i];
-            const { ventaRepository } = await MySQLConnection.getRepositories();
             const enviarItems = new EnvioItems({
                 importe,
                 fechaEnvio,
@@ -175,9 +177,9 @@ const detalleEnvio = async(req = request, res = response) => {
 
     const { detalleItems } = req.body;
     try {
+        const { ventaRepository } = await MySQLConnection.getRepositories();
         for (let i = 0; i < detalleItems.length; i++) {
             const { idEntregarProducto, idNumeroItem, cantidadEnviada, estadoEnvio, observacion } = detalleItems[i];
-            const { ventaRepository } = await MySQLConnection.getRepositories();
             const detalleEnvio = new DetalleEnvio({
                 idEntregarProducto,
                 idNumeroItem,
@@ -194,7 +196,37 @@ const detalleEnvio = async(req = request, res = response) => {
     }
 };
 
+const findAllTomarOrdenes = async(req = request, res = response) => {
+    try {
+        const { ventaRepository } = await MySQLConnection.getRepositories();
+        const items = await ventaRepository.findAllTomarOrdenes();
+        res.json({ ok: true, items });
+    } catch (err) {
+        res.status(500).json({ ok: false, msg: err });
+    }
+};
 
+const findAllTomarOrdenesByCodigo = async(req = request, res = response) => {
+    const { idTomarOrden } = req.body;
+    try {
+        const { ventaRepository } = await MySQLConnection.getRepositories();
+        const items = await ventaRepository.findAllTomarOrdenesByCodigo(idTomarOrden);
+        res.json({ ok: true, items });
+    } catch (err) {
+        res.status(500).json({ ok: false, msg: err });
+    }
+};
+
+const findAllDetalleRecomendaciones = async(req = request, res = response) => {
+    const { idRecomendacion } = req.body;
+    try {
+        const { ventaRepository } = await MySQLConnection.getRepositories();
+        const items = await ventaRepository.findAllDetalleRecomendaciones(idRecomendacion);
+        res.json({ ok: true, items });
+    } catch (err) {
+        res.status(500).json({ ok: false, msg: err });
+    }
+};
 
 
 module.exports = {
@@ -206,5 +238,8 @@ module.exports = {
     detalleRecomendacion,
     detallePedido,
     enviarItems,
-    detalleEnvio
+    detalleEnvio,
+    findAllTomarOrdenes,
+    findAllTomarOrdenesByCodigo,
+    findAllDetalleRecomendaciones
 }
