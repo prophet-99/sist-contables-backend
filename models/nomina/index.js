@@ -53,14 +53,14 @@ const register = ({ connection }) => {
         .catch( (err) => { throw err; } );
     };
     
-    const mostrarHorasTrabajadasXidXfecha = async (idEmpleado, fechaRegistro) => {
+    const mostrarHorasTrabajadasXidXfecha = async (idEmpleado) => {
         const sqlQuery = `SELECT e.id, e.nombres, e.apellidos,
         ob.fecha_registro, ob.hora_inicio, ob.hora_fin
         FROM obtener_tiempo ob
         INNER JOIN empleado e ON ob.id_empleado = e.id
-        WHERE e.id=? AND fecha_registro =?;`;
+        WHERE e.id=?`;
 
-        return connection.query(sqlQuery[idEmpleado, fechaRegistro]).then( (vq) => vq )
+        return connection.query(sqlQuery[idEmpleado]).then( (vq) => vq )
         .catch( (err) => { throw err; } );
     };
 

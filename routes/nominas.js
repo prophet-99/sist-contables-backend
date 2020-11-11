@@ -26,7 +26,7 @@ router.post('/obtenertiempos', [
     check('tarjetasTiempo', 'Las tarjetas de tiempo son obligatorios').notEmpty(),    
     validateFields
 ], insertObtenerTiempos);
-router.post('/consultas',[check('idEmpleado','el id del empleado es obligatorio').notEmpty(), 
-            check('fechaRegistro','la fecha es necesaria').notEmpty(), validateFields
+router.post('/consultas',[check('idEmpleado','el id del empleado es obligatorio').notEmpty(),
+    validateFields
 ], mostrarHorasTrabajadasXidXfecha);
 module.exports = router;
