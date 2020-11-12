@@ -165,7 +165,7 @@ const register = ({ connection }) => {
     };
     
     const listarRecomendacion = async() => {
-        const sqlQuery = `SELECT c.nombre,concat(e.nombres, ' ', e.apellidos) as empleado, e.rr.numero_recomendacion, rr.descripcion, rr.id_verificar_disponibilidad, rr.id_numero_cliente
+        const sqlQuery = `SELECT c.nombre, e.nombres, e.apellidos, rr.numero_recomendacion, rr.descripcion, rr.id_verificar_disponibilidad, rr.id_numero_cliente
         FROM registrar_recomendacion rr
         INNER JOIN cliente c ON rr.id_numero_cliente = c.id
         INNER JOIN tomar_orden to ON to.id_numero_cliente = c.id
