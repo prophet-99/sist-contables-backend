@@ -165,7 +165,7 @@ const register = ({ connection }) => {
     };
     
     const listarRecomendacion = async() => {
-        const sqlQuery = `SELECT numero_recomendacion, id_numero_cliente, id_numero_empleado, descripcion
+        const sqlQuery = `SELECT numero_recomendacion, descripcion, id_verificar_disponibilidad, id_numero_cliente
         FROM registrar_recomendacion`;
 
         return connection.query(sqlQuery)
