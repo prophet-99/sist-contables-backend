@@ -165,8 +165,11 @@ const register = ({ connection }) => {
     };
     
     const listarRecomendacion = async() => {
-        const sqlQuery = `SELECT numero_recomendacion, descripcion, id_verificar_disponibilidad, id_numero_cliente
-        FROM registrar_recomendacion`;
+        const sqlQuery = `SELECT rr.numero_recomendacion, rr.descripcion, rr.id_verificar_disponibilidad, rr.id_numero_cliente
+        FROM registrar_recomendacion rr
+        INNER JOIN cliente c ON rr.id_numero_cliente = c.id
+        INNER JOIN tomar_orden to ON to.id_numero_cliente = c.id
+        INNER JOIN empleado e ON to.id_empleado = e.id`;
 
         return connection.query(sqlQuery)
         .then((vq) => vq)
