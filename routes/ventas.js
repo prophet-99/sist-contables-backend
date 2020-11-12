@@ -16,7 +16,8 @@ const {
     detalleEnvio,
     findAllTomarOrdenes,
     findAllDetalleRecomendaciones,
-    findAllTomarOrdenesByCodigo
+    findAllTomarOrdenesByCodigo,
+    listarRecomendacion
 } = require('./../controllers/ventas');
 
 const router = Router();
@@ -28,7 +29,7 @@ router.post('/tomarordenes', [
     check('idTomarOrden').notEmpty(),
     validateFields
 ], findAllTomarOrdenesByCodigo);
-router.post('/detallerecomendacion', [
+router.post('/detallexrecomendacion', [
     check('idRecomendacion').notEmpty(),
     validateFields
 ], findAllDetalleRecomendaciones);
@@ -76,6 +77,7 @@ router.post('/detalleenvio', [
     check('items').notEmpty(),
     validateFields
 ], detalleEnvio);
+router.get('/listarRecomendaciones', listarRecomendacion);
 
 
 

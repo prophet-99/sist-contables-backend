@@ -164,6 +164,15 @@ const register = ({ connection }) => {
         .catch((err) => { throw err; });
     };
     
+    const listarRecomendacion = async() => {
+        const sqlQuery = `SELECT numero_recomendacion, id_numero_cliente, id_numero_empleado, descripcion
+        FROM registrar_recomendacion`;
+
+        return connection.query(sqlQuery)
+        .then((vq) => vq)
+        .catch((err) => { throw err; });
+    };
+    
     return {
         findAllItemsWithTasaUso,
         checkDisponibilidad,
@@ -178,7 +187,8 @@ const register = ({ connection }) => {
         insertFacturaCliente,
         findAllTomarOrdenes,
         findAllTomarOrdenesByCodigo,
-        findAllDetalleRecomendaciones
+        findAllDetalleRecomendaciones,
+        listarRecomendacion
     };
 };
 

@@ -58,9 +58,9 @@ const register = ({ connection }) => {
         ob.fecha_registro, ob.hora_inicio, ob.hora_fin
         FROM obtener_tiempo ob
         INNER JOIN empleado e ON ob.id_empleado = e.id
-        WHERE e.id=?`;
+        WHERE e.id = ? `;
 
-        return connection.query(sqlQuery[idEmpleado]).then( (vq) => vq )
+        return connection.query(sqlQuery, [idEmpleado]).then( (vq) => vq )
         .catch( (err) => { throw err; } );
     };
 

@@ -228,6 +228,15 @@ const findAllDetalleRecomendaciones = async(req = request, res = response) => {
     }
 };
 
+const listarRecomendacion = async(req = request, res = response) => {
+    try {
+        const { ventaRepository } = await MySQLConnection.getRepositories();
+        const recomendacion = await ventaRepository.listarRecomendacion();
+        res.json({ ok: true, recomendacion });
+    } catch (err) {
+        res.status(500).json({ ok: false, msg: err });
+    }
+};
 
 module.exports = {
     findAllItemsWithTasaUso,
@@ -241,5 +250,6 @@ module.exports = {
     detalleEnvio,
     findAllTomarOrdenes,
     findAllTomarOrdenesByCodigo,
-    findAllDetalleRecomendaciones
+    findAllDetalleRecomendaciones,
+    listarRecomendacion
 }
